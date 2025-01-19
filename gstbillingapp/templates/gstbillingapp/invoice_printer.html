@@ -12,7 +12,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-4 col-4"><strong>Invoice Date: {{invoice.invoice_date}}</strong></div>
-				<div class="col-sm-4 text-center col-4"><h4><strong>{{ invoice_data.invoice_payment_type }}</strong></h4></div>
+				<div class="col-sm-4 text-center col-4"><h4><strong>Payment By: {{ invoice_data.invoice_payment_type }}</strong></h4></div>
 				<div class="col-sm-4 text-right col-4"><strong>Invoice No:{{invoice.invoice_number}}</strong></div>
 
 			</div>
@@ -131,40 +131,19 @@
 
 <!--				<div class="col-sm-6 col-lg-6 col-md-6">-->
 					<table class="table text-right" id="invoice-grand-total-table">
-						<tr>
-							<td class="text-left">Total Taxable Amount: </td>
-							<td>{{ currency }} {{ invoice_data.invoice_total_amt_without_gst|floatformat:2 }}</td>
-						</tr>
-						{% if invoice_data.igstcheck %}
-							<tr>
-								<td  class="text-left">IGST: </td>
-								<td>{{ currency }} {{ invoice_data.invoice_total_amt_igst|floatformat:2 }}</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td  class="text-left">CGST: </td>
-								<td>{{ currency }} {{ invoice_data.invoice_total_amt_cgst|floatformat:2 }}</td>
-							</tr>
-							<tr>
-								<td  class="text-left">SGST: </td>
-								<td>{{ currency }} {{ invoice_data.invoice_total_amt_sgst|floatformat:2 }}</td>
-							</tr>
-						{% endif %}
-						<tr>
-							<td  class="text-left">Invoice Total: </td>
-							<td>{{ currency }} {{invoice_data.invoice_total_amt_with_gst|floatformat:2 }}</td>
-						</tr>
-						<tr> 
-<!--							<td colspan="4" class="text-middle">-->
-							<td  class="text-left">
-								Invoice Total In Words:
-							</td>
-							<td>
-								{{ total_in_words }} only.
-							</td>
-						</tr>
 
 						<tr id="invoice-signature-row">
+
+							<td  class="text-left">
+								<h5><strong>Invoice Total In Words: </strong>
+									{{ total_in_words }} only.</h5>
+							</td>
+							<td  class="text-right">
+								<h5><strong>Grand Total: {{ currency }} {{invoice_data.invoice_total_amt_with_gst|floatformat:2 }}</strong></h5>
+							</td>
+						</tr>
+						<tr>
+
 							<td class="text-left">
 								<strong>Bank Account Details:</strong>
 								<div>
@@ -175,12 +154,12 @@
 							</td>
 							<td colspan="15">
 								<div>
-									<strong>From {{user_profile.business_title}}</strong>
+									<strong>For, {{user_profile.business_title}}</strong>
 								</div>
 							</td>
 						</tr>
 						<tr id="invoice-signature-text-row">
-							<td colspan="15">Authorized Signature<br></td>
+							<td colspan="15">Authorized Signatory<br></td>
 						</tr>
 					</table>
 
