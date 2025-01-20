@@ -1,22 +1,26 @@
-# Use the official Python image as the base
 FROM python:3.10-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    gcc \
+    libffi-dev \
+    libssl-dev \
+    && apt-get clean
+
+# Copy requirements and install dependencies
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY . /app/
 
-# Expose the port your Django app runs on
-EXPOSE 8000
+# Collect static files
+RUN python manage.py collectstatic --noinput
 
-# Run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Expose the port and set the entry point
+EXPOSE 8000
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "gstbilling.wsgi:application"]
