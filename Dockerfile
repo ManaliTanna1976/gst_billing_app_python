@@ -12,11 +12,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 # Copy requirements and install dependencies
-COPY requirements.txt /app/
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
-COPY . /app/
+COPY . .
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
