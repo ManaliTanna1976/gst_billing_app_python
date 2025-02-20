@@ -138,6 +138,7 @@ function customer_result_to_domstr(result) {
     "<div>"+ result['customer_address'] + "</div>" +
     "<div>"+ result['customer_phone'] + "</div>" +
     "<div>"+ result['customer_gst'] + "</div>" +
+    "<div>"+ result['customer_pan'] + "</div>" +
     "</div>";
      return domstr;
 }
@@ -149,6 +150,7 @@ function customer_result_click() {
     $('#customer-address-input').val(customer_data_json['customer_address']);
     $('#customer-phone-input').val(customer_data_json['customer_phone']);
     $('#customer-gst-input').val(customer_data_json['customer_gst']);
+    $('#customer-pan-input').val(customer_data_json['customer_pan']);
 }
 
 function initialize_fuse_customers_search_bar() {
@@ -200,6 +202,7 @@ function initialize_fuse_customers () {
             "customer_name",
             "customer_address",
             "customer_gst",
+            "customer_pan"
             ]
         };
         fuse_customers = new Fuse(data, fuse_customer_options);
@@ -217,7 +220,7 @@ var selected_item_input;
 function product_result_to_domstr(result) {
     var domstr = "<div class='product-search-result' data-product='" + JSON.stringify(result) + "'>"+
     "<div>"+ result['product_name'] + "</div>" +
-    "<div>"+ result['product_hsn'] + " | " + result['product_unit'] + " | " + result['product_gst_percentage'] +
+    "<div>"+ result['product_hsn'] + " | " + result['product_rate_without_gst'] + " | " + result['product_gst_percentage'] +
     "</div>";
      return domstr;
 }
